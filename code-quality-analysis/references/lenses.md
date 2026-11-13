@@ -1,6 +1,6 @@
 # Analysis Lenses
 
-Before launching subagents, read `docs/code-quality/stack-discovery.md` and extract the backend root, frontend root, test roots, asset directories, migration directories, API client path, and test commands. For a read-only audit, use the discovery retained in working context. If neither is available, return to step 0. Skip any agent whose primary path is recorded as "not present" — with one exception: a static/SPA repo with no backend root still has server-side code in build/ops tooling (`scripts/`, `bin/`, `tools/`) and any auxiliary servers (webhook handlers, small Node/Python services). Run Agent 1 against those instead of skipping it; record the tooling dirs as the backend-root substitute in stack discovery.
+Before launching subagents, read `docs/code-quality/stack-discovery.md` and extract the backend root, frontend root, test roots, asset directories, migration directories, API client path, and test commands. For a read-only audit, use the discovery retained in working context. If neither is available, return to stack discovery. Skip any agent whose primary path is recorded as "not present" — with one exception: a static/SPA repo with no backend root still has server-side code in build/ops tooling (`scripts/`, `bin/`, `tools/`) and any auxiliary servers (webhook handlers, small Node/Python services). Run Agent 1 against those instead of skipping it; record the tooling dirs as the backend-root substitute in stack discovery.
 
 Run the selected lenses below, using up to 4 independent read-only subagents when available and permitted, or sequential passes in the current session. Pass each agent its relevant paths, the project root, and the instruction to return only `file:line` observations (no prescriptions). Ask subagents not to delegate further; use the host’s available tool schema.
 
@@ -13,11 +13,11 @@ Apply these to both Agent 1 and Agent 2 using the idiomatic tells for each conte
 |-----------|-----------|
 | **SRP** | Unit has >1 reason to change |
 | **OCP** | Adding entity/status/role requires editing, not extending |
-| **LSP** | Subclass/impl narrows preconditions, widens postconditions, or raises unexpected errors |
+| **LSP** | Subclass/impl narrows preconditions, weakens postconditions, or raises unexpected errors |
 | **ISP** | Consumer depends on surface area it doesn't use |
 | **DIP** | High-level module directly imports concrete low-level concern |
 
-For each principle, sample breadth before concluding. Report violations with `file:line` and a one-sentence smell description.
+These are search cues, not automatic violations. Report only a concrete consequence supported by the code: incorrect behavior, repeated change sites, unnecessary coupling that obstructs a real change, or demonstrated testing/navigation difficulty. Simple switches, direct service/API imports, and a single implementation can be appropriate. Do not require interfaces, factories, dependency injection, or more layers merely to match SOLID vocabulary. For each principle, sample breadth before concluding. Report violations with `file:line` and a one-sentence smell description.
 
 ---
 
@@ -114,4 +114,4 @@ Before flagging anything orphaned, read the project's own docs for files declare
 Run `git log --oneline -15`. If a finding touches code committed in the last 5 commits, note this explicitly — it may be a migration in progress rather than dead code.
 
 ### Confirmation rule
-Before flagging anything as orphaned, do a second-pass grep across the full source tree using alternative search terms (partial name, string interpolation patterns). Dynamic references (string interpolation, reflection, `eval`, `require(variable)`) can mask real usage — if you see evidence of dynamic dispatch, downgrade the finding to MEDIUM and note the reason.
+Before flagging anything as orphaned, do a second-pass grep across the full source tree using alternative search terms (partial name, string interpolation patterns). Dynamic references (string interpolation, reflection, `eval`, `require(variable)`) can mask real usage — if dynamic dispatch or external consumers leave usage uncertain, record an open question instead of calling it dead code. Severity is not a substitute for evidence.

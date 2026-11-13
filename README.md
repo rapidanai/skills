@@ -82,18 +82,48 @@ These are local installations. Hosted/cloud sessions need the skill available in
 In Codex:
 
 ```text
-$code-quality-analysis Review this repository. Report only, all four lenses, moderate refactor appetite.
+$code-quality-analysis Review this repository. Developer mode, report only, all applicable lenses.
 ```
 
 In Claude Code:
 
 ```text
-/code-quality-analysis Review this repository. Report only, all four lenses, moderate refactor appetite.
+/code-quality-analysis Review this repository. Developer mode, report only, all applicable lenses.
 ```
 
 In Hermes, ask to use `code-quality-analysis` with the same scope. Natural requests such as “analyze the codebase” or “find orphaned code” can also activate the skill.
 
-The skill discovers the stack, establishes scope, analyzes the selected lenses, verifies source citations, and provides a ranked report. It can also produce a self-contained implementation plan. Subagents are optional: when unavailable, the same checks run sequentially. No additional skills, MCP servers, or local models are required. A read-only request keeps discovery and plans in the conversation.
+The skill asks for a presentation mode and missing scope, discovers the stack, analyzes the selected lenses, verifies source citations, and provides a ranked report. It can also produce a self-contained implementation plan. Subagents are optional: when unavailable, the same checks run sequentially. No additional skills, MCP servers, or local models are required. A read-only request keeps discovery and plans in the conversation.
+
+## Choose a presentation mode
+
+| Mode | What you receive |
+| --- | --- |
+| **Developer** | Technical findings, source citations, confidence, and practical consequences |
+| **Plain language** | An accessible architectural summary with a compact evidence trail; requested plans explain proposed changes, benefits, risks, and validation |
+| **Learning** | Developer detail plus a short explanation of each distinct finding and proposed change |
+
+All modes use the same analysis depth. “Non-technical” and “educate” are accepted as aliases. You can switch modes during the review. Every question offers **Explain this**; Learning provides that context automatically. An explanation does not choose an answer or authorize changes.
+
+Every mode compares the **current code against a supported proposed improvement** for the same future development task. Reports include the expected direction of token expenditure, potential savings (Low / Medium / High / Unknown), evidence/confidence, and separate upfront implementation effort. These are estimates of working with the code—not savings from choosing a presentation mode. The after-state stays hypothetical until validated. No dollar or percentage claims are invented; [the estimation rules](code-quality-analysis/references/tokens.md) explain when numerical comparisons are justified.
+
+For example:
+
+```text
+Use code-quality-analysis in Plain language mode. Review all applicable lenses, stay read-only, and include a small-change plan. Compare potential token usage before and after the proposed improvements.
+```
+
+## Quality and embedded evaluations
+
+The skill requires practical evidence before recommending abstraction, separates unsupported suspicions from findings, and reports incomplete coverage. Its four lenses are not a comprehensive security, performance, accessibility, or correctness audit.
+
+The installable package includes [14 behavioral scenarios and a small fixture](code-quality-analysis/evals/README.md), covering audience modes, Explain this, false positives, evidence verification, read-only work, and unsupported token-savings claims. They load only when evaluating the skill, not during normal reviews.
+
+```sh
+python3 code-quality-analysis/evals/validate.py
+```
+
+This validates the evaluation definitions and fixture behavior; it does not run an assistant or measure savings. See [evaluation status](docs/quality-evaluation-notes.md) for what has and has not been tested.
 
 ## Update or uninstall
 
@@ -109,7 +139,7 @@ python3 -m unittest discover -s tests -v
 
 Tests install into temporary directories and check personal/project destinations, complete package copying, and protection of existing installations. They do not run live Codex, Claude Code, or Hermes sessions.
 
-Version `1.1.1` adds URL-driven agent installation guidance, a Hermes profile-aware installer, and verified repeat installations. Version `1.1.0` introduced runtime-neutral instructions and Codex/Claude Code support. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
+Version `1.2.0` adds audience modes, built-in explanations, before/after code token estimates, stronger evidence rules, and embedded evaluations. Version `1.1.1` added URL-driven agent installation guidance, a Hermes profile-aware installer, and verified repeat installations. Version `1.1.0` introduced runtime-neutral instructions and Codex/Claude Code support. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
 
 ## License
 

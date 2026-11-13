@@ -3,13 +3,13 @@ name: code-quality-analysis
 description: Use when asked for a codebase quality review, SOLID analysis, design inconsistencies, agentic discoverability, dead code, or orphaned artifacts.
 license: MIT
 metadata:
-  version: "1.1.1"
+  version: "1.2.0"
   author: Jon Deavers
 ---
 
 # Code Quality Analysis
 
-Analyze code through four lenses: backend SOLID, frontend SOLID, agentic discoverability, and orphaned artifacts. Reports describe observed problems with verified `file:line` evidence; implementation plans prescribe changes separately.
+Analyze code through four lenses: backend SOLID, frontend SOLID, agentic discoverability, and orphaned artifacts. Reports describe practical problems with verified `file:line` evidence. Plans prescribe implementation separately. Presentation can be Developer, Plain language, or Learning; analysis quality stays the same.
 
 ## Runtime adaptation
 
@@ -19,15 +19,15 @@ No other skill, MCP server, local model, or subagent capability is required. Whe
 
 ## Workflow
 
-### 0. Discover the stack
+### 0. Choose mode and scope
+
+Read [modes.md](references/modes.md) and [questions.md](references/questions.md). At invocation, establish Developer, Plain language, or Learning mode and the requested scope before substantial analysis. Reuse supplied choices; ask only for missing decisions and wait for them. Accept “non-technical” and “educate” as aliases. Offer the built-in “Explain this” option on every question; in Learning mode, explain the choice automatically first. Explaining is not consent. Report-only work does not need a refactor-appetite decision.
+
+### 1. Discover the stack
 
 Check `docs/code-quality/stack-discovery.md` in the target repository. If absent, use [stack-discovery-format.md](references/stack-discovery-format.md) to discover actual source roots, test and lint commands, and framework conventions. If present, re-verify its paths and commands against current files and inspect relevant configuration history; update changed fields and the verification date. Never infer directories from framework knowledge alone.
 
 For read-only requests or environments, retain discovery in working context and summarize it in the report instead of writing files. Otherwise save the discovery document. Do not alter application code during analysis.
-
-### 1. Establish scope
-
-Use [questions.md](references/questions.md) to establish report/plan scope, lens weighting, and refactor appetite. Reuse answers already supplied by the user; ask only for missing information and wait for it before analyzing. Use your host's question tool if available, or ordinary chat. A request for an audit is not authorization to implement findings.
 
 ### 2. Analyze
 
@@ -37,13 +37,13 @@ Give each delegate its lens brief, discovered paths, absolute repository root, s
 
 ### 3. Verify and report
 
-Use [report.md](references/report.md). Read every finding's cited source yourself, verify line numbers and surrounding context, and discard unsupported observations. Merge cross-lens duplicates. Distinguish framework requirements from avoidable design problems. For applicable ecosystems, consult [ecosystem notes](references/ecosystem-notes.md).
+Use [report.md](references/report.md), rendered according to the selected mode. Read every finding's cited source yourself, verify line numbers and surrounding context, and discard unsupported observations. Merge cross-lens duplicates. Require a concrete consequence, such as incorrect behavior, repeated change sites, or demonstrated testing/navigation difficulty. SOLID heuristics are investigation cues, not reasons to impose abstractions. Distinguish framework requirements from avoidable design problems. For applicable ecosystems, consult [ecosystem notes](references/ecosystem-notes.md).
 
-Confirm potential orphans with a second search using alternate names and dynamic-reference patterns. Lack of an internal caller does not prove a public API is unused; historical migrations can remain necessary. Report unresolved usage as uncertainty, not confirmed dead code. Explicitly distinguish lenses with no findings from skipped or incomplete lenses. Do not invent findings or propose fixes in the report.
+Confirm potential orphans with a second search using alternate names and dynamic-reference patterns. Lack of an internal caller does not prove a public API is unused; historical migrations can remain necessary. Report unresolved usage as uncertainty, not confirmed dead code. Explicitly distinguish lenses with no findings from skipped or incomplete lenses. Do not invent findings. Use [tokens.md](references/tokens.md) to compare a representative task before and after a supported hypothetical improvement in every mode. This brief comparison is not an implementation plan; label the after-state hypothetical and keep implementation steps in requested plans. Report inspected/skipped/inaccessible scope and checks actually performed. This review is not a comprehensive security, correctness, performance, or accessibility audit.
 
 ### 4. Plan when requested
 
-If a plan was already requested, produce it using [plan.md](references/plan.md). Otherwise offer one for all findings or a chosen subset. Follow an existing project plan convention; absent one, use `docs/code-quality/plans/<descriptive-name>.md`. For read-only work, return the plan in chat. No separate planning skill is needed.
+If a plan was already requested, produce it using [plan.md](references/plan.md) in the selected mode. Otherwise offer one for all findings or a chosen subset. Follow an existing project plan convention; absent one, use `docs/code-quality/plans/<descriptive-name>.md`. For read-only work, return the plan in chat. No separate planning skill is needed.
 
 ### 5. Implement only when authorized
 
@@ -52,3 +52,7 @@ Implement only the approved scope in dependency order. Derive new-file conventio
 ## Optional integrations
 
 If an existing DESLOP MCP tool answers a narrow question, it may supplement the analysis. Verify its findings against source just like subagent output. Existing local-model delegation may be used when configured and suitable, but do not change global model settings to run this skill. Neither integration is required.
+
+## Embedded evaluations
+
+When maintaining or evaluating this skill, use [evals/README.md](evals/README.md) for runnable fixtures, behavioral scenarios, and scoring. Do not run or load the eval suite during ordinary user audits. Fixture validation is not evidence that an assistant follows the skill; behavioral results and real token measurements must be reported separately.

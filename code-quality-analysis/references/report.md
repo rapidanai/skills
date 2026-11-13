@@ -1,32 +1,30 @@
-Synthesize, deduplicate, and rank findings across all four lenses.
+# Evidence-based report
 
-**Cross-lens merge rule**: If the same file, module, or pattern appears in findings from multiple agents, merge them into one block. List all applicable lenses and principles in that block's fields. Do not report the same location twice under different headings.
+Render according to [modes.md](modes.md). Keep the same finding identities, severity, confidence, evidence, and token estimates across modes.
 
-Use this exact block per finding:
+Begin with scope and coverage: selected lenses, inspected paths, sampling limits, inaccessible areas, and checks actually run. Distinguish “no findings in inspected scope” from “not inspected.” Rank by demonstrated practical consequence, not the number of SOLID labels. Merge only the same underlying issue across lenses; unrelated defects in one file remain separate.
+
+## Finding record (Developer; retained as evidence in other modes)
 
 ### N. [Title] [HIGH | MEDIUM | LOW]
-**Lens**: SOLID-Backend / SOLID-Frontend / Discoverability / Orphan
-**Principle / concern**: SRP / OCP / LSP / ISP / DIP / Pattern legibility / Naming / Convergence / Orphan — [type: route | code | file | test | asset]
-**Observation**: One sentence. What is, not what should be.
-**Evidence**: `file:line` references, ≥2 where the pattern repeats. Single citation acceptable for unique orphan findings.
-**Divergence**: How many variants or instances exist, rough split. (Omit for orphan findings with a single instance.)
-**Agent impact**: What would a new agent get wrong reading only part of the codebase?
-**Session context**: *(omit if not applicable)* Note if this finding is in code touched by recent commits, or if a partial fix was applied in a prior session that left this behind.
+**Lens / concern**: Applicable lenses and relevant principle, if any.
+**Observation**: What the source actually does.
+**Practical impact**: Who or what is affected; concrete failure, change amplification, or navigation/testing burden.
+**Evidence**: Verified `file:line` references, including both sites for a repeated pattern. A unique finding can have one citation.
+**Confidence**: High / Medium / Low, with what was verified and what remains uncertain. Unsupported suspicions belong in open questions, not ranked findings.
+**Divergence**: Number of competing instances where relevant.
+**Agent impact**: What future AI-assisted work could get wrong or needlessly repeat.
+**Before/after token impact**: Use [tokens.md](tokens.md): same representative task, current work, hypothetical improved work, expenditure direction, savings rating, basis/confidence, and upfront effort. Unknown is valid; no invented totals or percentages.
+**Session context**: Recent changes or migration-in-progress evidence, when applicable.
 
----
+Learning adds a short “Why this matters” paragraph per finding. Plain language leads with the practical consequence and keeps the verified evidence in a concise appendix keyed to finding IDs. Do not hide unresolved risk to make the summary reassuring.
 
-**Severity guidance**
+## Severity and evidence
 
-- **HIGH** — a wrong assumption propagates to new code; a SOLID violation that compounds; an orphan that is large, central, or likely to be mistaken for live code by an agent.
-- **MEDIUM** — resolvable by reading multiple files; fix is local once identified; an orphan that is small or at the project periphery.
-- **LOW** — cosmetic, isolated, easily inferred; trivially removable asset or commented-out line.
+- **HIGH:** evidenced significant behavior/data risk or repeated change failure with broad reach; state the affected behavior and reach. File size, a direct import, or a principle label is insufficient.
+- **MEDIUM:** concrete local defect or recurring maintenance/navigation burden with limited reach.
+- **LOW:** isolated clarity or housekeeping problem with demonstrated relevance.
 
-Before promoting any finding to HIGH, confirm: does the cited code actually contain the smell when read in full? Findings inferred from file names, directory placement, or function signatures without reading the body must be downgraded to MEDIUM or discarded.
+Separate confidence from severity. Do not downgrade an unsupported guess to MEDIUM or LOW and report it anyway. Before reporting any finding, read the full relevant function/class and check callers, conventions, or dynamic discovery as needed. A clean/simple implementation is a valid outcome.
 
-For orphan findings, confirm with a second-pass grep before assigning HIGH.
-
----
-
-End with a one-paragraph **meta-summary**: what is the dominant shape of the debt across all four lenses?
-
-Do not propose solutions in the report. If patterns are evenly split, flag it as a team decision, not a violation.
+End with a short overall pattern summary, conservative before/after token-impact assessment, and open questions/coverage limits. A brief hypothetical improved state may illustrate savings; detailed changes and prescriptions belong in the optional plan. Never present proposed changes as completed work.
