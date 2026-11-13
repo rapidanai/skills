@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -107,6 +108,73 @@ class InstallTests(unittest.TestCase):
             self.assertNotEqual(result.returncode, 0)
             self.assertIn('Directory does not exist', result.stderr)
             self.assertFalse(missing.exists())
+
+
+class SelectionTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.repo = self.root / 'repo'
+        self.repo.mkdir()
+        shutil.copy2(ROOT / 'install.py', self.repo / 'install.py')
+        for name in ('first-skill', 'second-skill'):
+            package = self.repo / name
+            package.mkdir()
+            (package / 'SKILL.md').write_text(f'---\nname: {name}\ndescription: Test fixture\n---\n')
+        self.project = self.root / 'project'
+        self.project.mkdir()
+
+    def run_install(self, *args):
+        return subprocess.run([sys.executable, str(self.repo / 'install.py'), *args],
+                              text=True, capture_output=True)
+
+    def test_list_without_agent_or_writes(self):
+        result = self.run_install('--list')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.splitlines(), ['first-skill', 'second-skill'])
+        self.assertEqual(list(self.project.iterdir()), [])
+
+    def test_select_only_requested_skill(self):
+        for agent, folder in [('codex', '.agents'), ('claude', '.claude'), ('hermes', 'skills/software-development')]:
+            with self.subTest(agent=agent):
+                scope = '--hermes-home' if agent == 'hermes' else '--project'
+                result = self.run_install('--agent', agent, scope, str(self.project), '--skills', 'second-skill')
+                self.assertEqual(result.returncode, 0, result.stderr)
+                dest = self.project / folder
+                if agent != 'hermes':
+                    dest /= 'skills'
+                self.assertEqual([p.name for p in dest.iterdir()], ['second-skill'])
+
+    def test_multiple_selection_and_all(self):
+        for selection in [('--skills', 'first-skill', 'second-skill'), ('--all',)]:
+            with self.subTest(selection=selection):
+                result = self.run_install('--agent', 'codex', '--project', str(self.project), *selection)
+                self.assertEqual(result.returncode, 0, result.stderr)
+                dest = self.project / '.agents/skills'
+                self.assertEqual(sorted(p.name for p in dest.iterdir()), ['first-skill', 'second-skill'])
+
+    def test_unspecified_selection_requires_choice_for_multiple_skills(self):
+        result = self.run_install('--agent', 'codex', '--project', str(self.project))
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('Choose --skills', result.stderr)
+        self.assertEqual(list(self.project.iterdir()), [])
+
+    def test_unknown_name_or_path_does_not_install_anything(self):
+        for name in ('unknown', '../first-skill', '/tmp/first-skill'):
+            result = self.run_install('--agent', 'codex', '--project', str(self.project), '--skills', 'first-skill', name)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('Unknown skill', result.stderr)
+            self.assertEqual(list(self.project.iterdir()), [])
+
+    def test_conflict_preflight_preserves_other_selections(self):
+        dest = self.project / '.agents/skills/second-skill'
+        dest.mkdir(parents=True)
+        (dest / 'SKILL.md').write_text('local changes')
+        result = self.run_install('--agent', 'codex', '--project', str(self.project), '--all')
+        self.assertNotEqual(result.returncode, 0)
+        self.assertFalse((dest.parent / 'first-skill').exists())
+        self.assertEqual((dest / 'SKILL.md').read_text(), 'local changes')
 
 
 if __name__ == '__main__':

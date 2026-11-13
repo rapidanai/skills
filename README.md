@@ -7,12 +7,12 @@ Reusable agent skills for **Codex, Claude Code, and Hermes**.
 Give your Codex, Claude Code, or Hermes agent this request:
 
 ```text
-Install the skills from https://github.com/rapidanai/skills.git
+Install code-quality-analysis from https://github.com/rapidanai/skills.git
 ```
 
-The agent should clone the repository, follow [INSTALL.md](INSTALL.md), install for its own runtime, and verify the files. You do not need to choose folders or run commands yourself. Codex and Claude Code default to personal installation; Hermes uses its active profile. Existing differing copies are preserved for review. Network access and permission to write the destination are required.
+The agent should clone the repository, follow [INSTALL.md](INSTALL.md), install for its own runtime, and verify the files. Name one or more skills in your request, or explicitly ask for all skills. If several skills are available and you have not chosen, the agent will show the list and ask. You do not need to choose folders or run commands yourself. Codex and Claude Code default to personal installation; Hermes uses its active profile. Existing differing copies are preserved for review. Network access and permission to write the destination are required.
 
-**For agents:** [INSTALL.md](INSTALL.md) is the installation procedure. The only current package is `code-quality-analysis/`; the repository root is not a skill package.
+**For agents:** [INSTALL.md](INSTALL.md) is the installation procedure. Discover packages with `python3 install.py --list` and install only the requested selection. The repository root is not a skill package.
 
 ## Available skills
 
@@ -33,13 +33,13 @@ Install for your user account (available across local projects):
 
 ```sh
 # Codex
-python3 install.py --agent codex
+python3 install.py --agent codex --skills code-quality-analysis
 
 # Claude Code
-python3 install.py --agent claude
+python3 install.py --agent claude --skills code-quality-analysis
 
 # Hermes (inside a session with its active HERMES_HOME exported)
-python3 install.py --agent hermes
+python3 install.py --agent hermes --skills code-quality-analysis
 ```
 
 Run the command for your assistant. For Hermes outside an active session, pass `--hermes-home /absolute/path/to/active/profile` as described in [INSTALL.md](INSTALL.md). On Windows, use `py -3` instead of `python3` if needed. Start a new assistant session after installing.
@@ -47,11 +47,21 @@ Run the command for your assistant. For Hermes outside an active session, pass `
 To install for one existing project instead:
 
 ```sh
-python3 install.py --agent codex --project /path/to/project
-python3 install.py --agent claude --project /path/to/project
+python3 install.py --agent codex --skills code-quality-analysis --project /path/to/project
+python3 install.py --agent claude --skills code-quality-analysis --project /path/to/project
 ```
 
 The installer copies the entire skill, including references and Codex UI metadata. It does not change assistant settings, install dependencies, or overwrite existing skills. Project installations can be committed with your project for teammates.
+
+### Choose skills
+
+```sh
+python3 install.py --list
+python3 install.py --agent codex --skills code-quality-analysis
+python3 install.py --agent codex --all
+```
+
+`--skills` accepts one or more space-separated names. The same selection options work with `--agent claude` and `--agent hermes`. Unknown names fail before any installation; existing conflicts are checked across the selection before copying. If no selection is given, a sole available skill is installed; multiple available skills require `--skills` or explicit `--all`.
 
 ### Manual installation
 
