@@ -2,6 +2,18 @@
 
 Reusable agent skills for **Codex, Claude Code, and Hermes**.
 
+## Install with your agent
+
+Give your Codex, Claude Code, or Hermes agent this request:
+
+```text
+Install the skills from https://github.com/rapidanai/skills.git
+```
+
+The agent should clone the repository, follow [INSTALL.md](INSTALL.md), install for its own runtime, and verify the files. You do not need to choose folders or run commands yourself. Codex and Claude Code default to personal installation; Hermes uses its active profile. Existing differing copies are preserved for review. Network access and permission to write the destination are required.
+
+**For agents:** [INSTALL.md](INSTALL.md) is the installation procedure. The only current package is `code-quality-analysis/`; the repository root is not a skill package.
+
 ## Available skills
 
 | Skill | Purpose |
@@ -25,9 +37,12 @@ python3 install.py --agent codex
 
 # Claude Code
 python3 install.py --agent claude
+
+# Hermes (inside a session with its active HERMES_HOME exported)
+python3 install.py --agent hermes
 ```
 
-Run either command, or both if you use both assistants. On Windows, use `py -3` instead of `python3` if needed. Start a new assistant session after installing.
+Run the command for your assistant. For Hermes outside an active session, pass `--hermes-home /absolute/path/to/active/profile` as described in [INSTALL.md](INSTALL.md). On Windows, use `py -3` instead of `python3` if needed. Start a new assistant session after installing.
 
 To install for one existing project instead:
 
@@ -72,7 +87,7 @@ The skill discovers the stack, establishes scope, analyzes the selected lenses, 
 
 ## Update or uninstall
 
-Run `git pull --ff-only` in this checkout to get updates. Before reinstalling, back up any local edits and remove **only the installed `code-quality-analysis` directory** from the location above, then rerun the installer. Removing that directory also uninstalls the skill. Restart your assistant session afterward. Avoid duplicate personal and project copies unless you intend to manage both.
+Run `git pull --ff-only` in this checkout to get updates. Identical reinstallations succeed without changes. To replace a differing installation, first back up any local edits and remove **only the installed `code-quality-analysis` directory** from the location above, then rerun the installer. Removing that directory also uninstalls the skill. Restart your assistant session afterward. Avoid duplicate personal and project copies unless you intend to manage both.
 
 ## Development
 
@@ -84,7 +99,7 @@ python3 -m unittest discover -s tests -v
 
 Tests install into temporary directories and check personal/project destinations, complete package copying, and protection of existing installations. They do not run live Codex, Claude Code, or Hermes sessions.
 
-Version `1.1.0` adds runtime-neutral instructions, Codex metadata, and Codex/Claude Code installation. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
+Version `1.1.1` adds URL-driven agent installation guidance, a Hermes profile-aware installer, and verified repeat installations. Version `1.1.0` introduced runtime-neutral instructions and Codex/Claude Code support. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
 
 ## License
 

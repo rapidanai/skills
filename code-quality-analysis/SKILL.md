@@ -3,7 +3,7 @@ name: code-quality-analysis
 description: Use when asked for a codebase quality review, SOLID analysis, design inconsistencies, agentic discoverability, dead code, or orphaned artifacts.
 license: MIT
 metadata:
-  version: "1.1.0"
+  version: "1.1.1"
   author: Jon Deavers
 ---
 
