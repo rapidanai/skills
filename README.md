@@ -113,4 +113,4 @@ Version `1.1.1` adds URL-driven agent installation guidance, a Hermes profile-aw
 
 ## License
 
-[MIT](LICENSE), copyright Jon Deavers.
+[MIT](LICENSE), copyright Rapidan Intelligent Automations & Jon Deavers.
