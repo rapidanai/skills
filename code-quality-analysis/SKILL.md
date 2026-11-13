@@ -3,7 +3,7 @@ name: code-quality-analysis
 description: Use when asked for a codebase quality review, SOLID analysis, design inconsistencies, agentic discoverability, dead code, or orphaned artifacts.
 license: MIT
 metadata:
-  version: "1.3.0"
+  version: "1.4.0"
   author: Jon Deavers
 ---
 
@@ -45,13 +45,13 @@ Confirm potential orphans with a second search using alternate names and dynamic
 
 If a plan was already requested, produce it using [plan.md](references/plan.md) in the selected mode. Otherwise offer one for all findings or a chosen subset. Follow an existing project plan convention; absent one, use `docs/code-quality/plans/<descriptive-name>.md`. For read-only work, return the plan in chat. No separate planning skill is needed.
 
-### 5. Offer optional token estimate
+### 5. Implement only when authorized
 
-After the completed session summary, offer an optional estimate of how the proposed code improvements could reduce tokens on future development tasks. Include “Explain this.” Do not estimate in an ordinary report or plan, and wait for explicit opt-in. An explanation keeps the choice pending and does not authorize implementation. After opt-in, read [tokens.md](references/tokens.md) and give a lightweight comparison for the same task on current and proposed code. If no supported improvement exists, say so.
+Before editing, capture the baseline needed for a comparable code-quality evaluation. Implement only the approved scope in dependency order. Derive new-file conventions from the checkout. Run the relevant lint and tests identified in discovery, distinguish existing failures from regressions, and report checks that could not run. Refresh discovery when the project shape changes. Commit, push, deploy, or run database upgrades only when those actions are authorized; this skill grants no extra permission.
 
-### 6. Implement only when authorized
+### 6. Compare measured code quality
 
-Implement only the approved scope in dependency order. Derive new-file conventions from the checkout. Run the relevant lint and tests identified in discovery, distinguish existing failures from regressions, and report checks that could not run. Refresh discovery when the project shape changes. Commit, push, deploy, or run database upgrades only when those actions are authorized; this skill grants no extra permission.
+After an authorized implementation, use [code-metrics.md](references/code-metrics.md) to compare the same code scope with the captured baseline. Report deterministic measurements such as physical source lines, files changed, and relevant tests or lint results alongside observed behavior. Report added and deleted lines separately; a net line reduction alone is not proof of quality. A review or plan without implemented changes has no after-state: identify useful baseline checks and proposed success criteria, but do not fabricate after metrics.
 
 ## Optional integrations
 
@@ -59,4 +59,4 @@ If an existing DESLOP MCP tool answers a narrow question, it may supplement the 
 
 ## Embedded evaluations
 
-When maintaining or evaluating this skill, use [evals/README.md](evals/README.md) for runnable fixtures, behavioral scenarios, and scoring. Do not run or load the eval suite during ordinary user audits. Fixture validation is not evidence that an assistant follows the skill; behavioral results and real token measurements must be reported separately.
+When maintaining or evaluating this skill, use [evals/README.md](evals/README.md) for runnable fixtures, behavioral scenarios, and scoring. Do not run or load the eval suite during ordinary user audits. Fixture validation is not evidence that an assistant follows the skill; behavioral results and code-change measurements must be reported separately.

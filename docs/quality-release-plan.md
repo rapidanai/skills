@@ -1,11 +1,11 @@
-# Audience modes and quality evaluation plan
+# Audience modes and code-quality evaluation plan
 
-Scope: preserve the four analysis lenses, add Developer / Plain language / Learning presentation, built-in question explanations, optional future-development token estimates after explicit opt-in, and distributable evaluation scenarios.
+Scope: preserve the four analysis lenses, Developer / Plain language / Learning presentation, built-in question explanations, and distributable evaluation scenarios. Replace token-economy estimates with deterministic before/after measurements of implemented code.
 
-1. Establish baseline gaps with the current skill and a small source fixture.
-2. Add shared mode and opt-in code-token comparison contracts; adapt questions, reports, and plans. Keep evidence and analysis depth identical across modes, and preserve report/plan/implementation boundaries.
-3. Correct overbroad SOLID heuristics and uncertain-orphan handling. Add confidence, practical consequences, coverage, and behavior-based verification guidance.
-4. Bundle fixtures, scenario prompts, an explicit scoring rubric, and a validation script. Use independent agents to exercise the revised guidance; report simulations separately from live host testing.
-5. Validate the complete installable package and installer suite, then publish the update.
+1. Keep verified findings, practical consequences, coverage, and false-positive safeguards across all modes.
+2. For plans, name the baseline and post-change checks without inventing after values.
+3. For authorized implementations, capture comparable source-line counts, added and deleted lines, finding-specific behavior, and relevant tests or lint results.
+4. Exercise an ordinary read-only review and an isolated implementation scenario. Keep prior behavioral captures as historical evidence, not validation of this revision.
+5. Validate the installable package, then publish.
 
-Critical checks: plain language preserves evidence and risk; Learning does not imply deeper audit; explaining a question does not answer it or authorize edits; unsupported savings claims are declined before opt-in; dynamic plugins and simple direct imports do not produce false positives; limited coverage is not presented as a clean bill of health.
+Critical checks: line reduction is not a quality verdict; added tests may increase line count; unsupported token-cost claims are declined; dynamically loaded plugins and simple imports do not become false findings; limited coverage is stated.

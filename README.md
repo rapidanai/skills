@@ -105,25 +105,25 @@ The skill asks for a presentation mode and missing scope, discovers the stack, a
 
 All modes use the same analysis depth. “Non-technical” and “educate” are accepted as aliases. You can switch modes during the review. Every question offers **Explain this**; Learning provides that context automatically. An explanation does not choose an answer or authorize changes.
 
-Every mode compares the **current code against a supported proposed improvement** for the same future development task. Reports include the expected direction of token expenditure, potential savings (Low / Medium / High / Unknown), evidence/confidence, and separate upfront implementation effort. These are estimates of working with the code—not savings from choosing a presentation mode. The after-state stays hypothetical until validated. No dollar or percentage claims are invented; [the estimation rules](code-quality-analysis/references/tokens.md) explain when numerical comparisons are justified.
+For read-only reviews, the skill reports observed findings and names useful checks for a proposed fix. After an authorized implementation, it compares measured code quality before and after on the same scope: physical source lines, added and deleted lines, finding-specific behavior, and relevant test or lint results. A line reduction alone does not establish an improvement. See [the measurement guide](code-quality-analysis/references/code-metrics.md).
 
 For example:
 
 ```text
-Use code-quality-analysis in Plain language mode. Review all applicable lenses, stay read-only, and include a small-change plan. Compare potential token usage before and after the proposed improvements.
+Use code-quality-analysis in Plain language mode. Review all applicable lenses, stay read-only, and include a small-change plan with reproducible before/after checks.
 ```
 
 ## Quality and embedded evaluations
 
 The skill requires practical evidence before recommending abstraction, separates unsupported suspicions from findings, and reports incomplete coverage. Its four lenses are not a comprehensive security, performance, accessibility, or correctness audit.
 
-The installable package includes [14 behavioral scenarios and a small fixture](code-quality-analysis/evals/README.md), covering audience modes, Explain this, false positives, evidence verification, read-only work, and unsupported token-savings claims. They load only when evaluating the skill, not during normal reviews.
+The installable package includes [15 behavioral scenarios and a small fixture](code-quality-analysis/evals/README.md), covering audience modes, Explain this, false positives, evidence verification, read-only work, and deterministic code-quality measurement. They load only when evaluating the skill, not during normal reviews.
 
 ```sh
 python3 code-quality-analysis/evals/validate.py
 ```
 
-This validates the evaluation definitions and fixture behavior; it does not run an assistant or measure savings. See [evaluation status](docs/quality-evaluation-notes.md) for what has and has not been tested.
+This validates the evaluation definitions and fixture behavior; it does not run an assistant or measure implemented changes. See [evaluation status](docs/quality-evaluation-notes.md) for what has and has not been tested.
 
 ## Update or uninstall
 
@@ -139,7 +139,7 @@ python3 -m unittest discover -s tests -v
 
 Tests install into temporary directories and check personal/project destinations, complete package copying, and protection of existing installations. They do not run live Codex, Claude Code, or Hermes sessions.
 
-Version `1.2.0` adds audience modes, built-in explanations, before/after code token estimates, stronger evidence rules, and embedded evaluations. Version `1.1.1` added URL-driven agent installation guidance, a Hermes profile-aware installer, and verified repeat installations. Version `1.1.0` introduced runtime-neutral instructions and Codex/Claude Code support. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
+Version `1.4.0` adds deterministic before/after code-quality measurement for implemented changes. Version `1.3.0` introduced an optional token estimate, which `1.4.0` removes. Version `1.2.0` added audience modes, built-in explanations, stronger evidence rules, and embedded evaluations. Version `1.1.1` added URL-driven agent installation guidance, a Hermes profile-aware installer, and verified repeat installations. Version `1.1.0` introduced runtime-neutral instructions and Codex/Claude Code support. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
 
 ## License
 

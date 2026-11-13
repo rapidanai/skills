@@ -23,7 +23,7 @@ def main():
     for name in ('README.md', 'ui.py', 'loader.py', 'plugins/receipt.py'):
         assert (fixture / name).is_file(), name
     print(f'PASS: {len(seen)} scenario definitions and fixture oracles validated.')
-    print('This does not execute or score assistant behavior or measure token savings.')
+    print('This does not execute or score assistant behavior or evaluate code-quality measurement behavior.')
 
 
 if __name__ == '__main__':

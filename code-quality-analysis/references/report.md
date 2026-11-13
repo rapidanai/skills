@@ -26,4 +26,4 @@ Learning adds a short “Why this matters” paragraph per finding. Plain langua
 
 Separate confidence from severity. Do not downgrade an unsupported guess to MEDIUM or LOW and report it anyway. Before reporting any finding, read the full relevant function/class and check callers, conventions, or dynamic discovery as needed. A clean/simple implementation is a valid outcome.
 
-End with a short overall pattern summary and open questions/coverage limits. Complete the session summary before offering an optional future-development token estimate with “Explain this.” Do not estimate before explicit opt-in. Detailed changes and prescriptions belong in the optional plan. Never present proposed changes as completed work.
+End with a short overall pattern summary and open questions/coverage limits. For completed changes, summarize measured before/after code metrics using [code-metrics.md](code-metrics.md), including behavior and verification results. For read-only reviews, do not present proposed code as a measured after-state. Detailed changes and prescriptions belong in the optional plan. Never present proposed changes as completed work.

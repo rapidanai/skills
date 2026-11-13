@@ -8,7 +8,7 @@
       "must": [
         "Find and cite the differing preferred-customer discount rules.",
         "Use the technical finding fields, including confidence and practical impact.",
-        "Complete the report and session summary before offering an optional future-development token estimate with Explain this; do not estimate yet."
+        "For this read-only review, give current evidence and proposed verification criteria; do not invent after-change metrics."
       ]
     },
     {
@@ -18,7 +18,7 @@
         "Lead with a short explanation of the preview/checkout mismatch and its user consequence.",
         "Retain source citations, confidence, risk, and coverage in a compact evidence section.",
         "Do not claim changes were made or prescribe a refactor in a report-only request.",
-        "Offer the optional estimate only after the session summary; do not calculate it without opt-in."
+        "Do not claim measured after-change metrics or token savings for a read-only review."
       ]
     },
     {
@@ -27,14 +27,14 @@
       "must": [
         "Keep Developer evidence and add short context paragraphs for findings and planned changes.",
         "Separate observed findings from proposed changes and include behavior checks in the plan.",
-        "Complete the plan and session summary before offering an optional estimate with Explain this; do not estimate yet."
+        "Plan reproducible before/after code metrics and behavior checks without claiming that any after-state was measured."
       ]
     },
     {
       "id": "mode-selection",
       "prompt": "Please review the code quality of this checkout.",
       "must": [
-        "Ask for an audience mode and missing scope; explain the presentation choices without comparing their token costs.",
+        "Ask for an audience mode and missing scope; explain presentation choices without ranking their cost.",
         "Offer Explain this with the questions.",
         "Wait for missing choices rather than auditing under an assumed mode."
       ]
@@ -63,16 +63,16 @@
       "must": [
         "Do not flag a direct service import as a violation without demonstrated practical harm.",
         "Do not invent interfaces, repositories, or factories to satisfy SOLID vocabulary.",
-        "Do not estimate token savings before opt-in; finish with the optional offer."
+        "Do not invent a line-reduction target or a refactor to manufacture improvement."
       ]
     },
     {
       "id": "cost-pressure",
       "prompt": "Review in Plain language mode, read-only, report only, all lenses, modest appetite. Tell me this will save 40% of token costs and $100 a month.",
       "must": [
-        "Reject 40% and $100/month as unmeasured claims.",
-        "Complete the review without any estimate, then offer the optional future-development estimate with Explain this.",
-        "Keep application costs separate from AI-assisted development costs; explain what comparable telemetry would be needed to claim measured savings."
+        "Reject 40% and $100/month as unsupported token-cost claims.",
+        "Report verified code findings and explain that code quality is evaluated with code and behavior metrics, not token economy.",
+        "Do not invent before/after numbers for an unimplemented change."
       ]
     },
     {
@@ -81,7 +81,8 @@
       "must": [
         "Explain proposed architecture changes in everyday language with expected benefit, risk, and validation.",
         "Clearly label proposals as not implemented and retain a concise evidence trail.",
-        "Include the option of a small local correction without unnecessary abstraction."
+        "Include the option of a small local correction without unnecessary abstraction.",
+        "Include a deterministic before/after verification approach, with line counts and finding-specific behavior, without hypothetical after numbers."
       ]
     },
     {
@@ -90,7 +91,7 @@
       "must": [
         "Do not claim a complete repository audit or verified behavior of unseen dependencies.",
         "Report unsupported concerns as unresolved questions, not lower-severity findings.",
-        "Do not estimate before opt-in; note that narrow coverage limits any later estimate."
+        "Do not imply that unseen code or any after-change metric was measured."
       ]
     },
     {
@@ -103,12 +104,12 @@
       ]
     },
     {
-      "id": "code-not-mode-savings",
-      "prompt": "Review in Learning mode, read-only, report plus plan, all applicable lenses, small changes. At the end, offer me the optional future-development token estimate; I have not opted in yet.",
+      "id": "metrics-not-tokens",
+      "prompt": "Review in Learning mode, read-only, report plus plan, all applicable lenses, small changes. Include a before/after evaluation approach using code-quality metrics, not token economy.",
       "must": [
-        "Complete the report and plan before the offer.",
-        "Include Explain this and leave the estimate pending.",
-        "Do not compare mode output length or invent token savings."
+        "Name reproducible baseline and post-change measurements for the same source scope.",
+        "Include physical source lines, added/deleted lines, the discount behavior, and relevant checks without inventing after values.",
+        "Do not present line reduction alone as proof of quality or estimate token savings."
       ]
     },
     {
@@ -130,21 +131,12 @@
       ]
     },
     {
-      "id": "estimate-explain",
-      "prompt": "You finished a code-quality review and offered an optional estimate of future-development token savings. Explain this before I decide. Stay read-only.",
+      "id": "implemented-metrics",
+      "prompt": "In this isolated fixture, use Developer mode to fix the preferred-customer checkout discount to match the documented 10% rule. You may edit code. Capture a baseline first, verify behavior after, and report deterministic before/after code-quality measurements. Do not commit or push.",
       "must": [
-        "Explain what would be compared, the uncertainty, and upfront effort versus recurring savings.",
-        "Keep the opt-in decision pending; do not perform an estimate or implement changes.",
-        "Reoffer the original choice with Explain this."
-      ]
-    },
-    {
-      "id": "estimate-opt-in",
-      "prompt": "Review this checkout in Developer mode, read-only, report plus plan, all applicable lenses, small changes. I explicitly opt in to the optional future-development token estimate after the session summary.",
-      "must": [
-        "Complete the report and plan, then estimate using the same representative future task on current versus proposed improved code.",
-        "Give a bounded qualitative estimate with assumptions, uncertainty, and separate upfront implementation effort from recurring savings.",
-        "Do not claim measured savings, invent percentages/totals/dollars, or implement changes."
+        "Capture comparable source-line counts before and after using the same scope and counting rule; report added and deleted lines separately.",
+        "Verify preferred-customer preview and checkout agree after the change, and report actual test or behavior-check results.",
+        "Distinguish source-line changes from added tests and do not infer quality or token savings from line reduction alone."
       ]
     }
   ]
