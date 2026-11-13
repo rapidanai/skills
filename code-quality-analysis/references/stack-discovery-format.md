@@ -1,6 +1,6 @@
 # Stack Discovery Format
 
-Discover the project's shape by reading actual files in the repo. Write the result to `docs/code-quality/stack-discovery.md`, creating `docs/code-quality/` if it does not exist.
+Discover the project's shape by reading actual files in the repo. Write the result to `docs/code-quality/stack-discovery.md`, creating `docs/code-quality/` if it does not exist. For read-only work, retain the same structure in working context without writing files.
 
 ## What to discover
 
@@ -76,7 +76,7 @@ Write `docs/code-quality/stack-discovery.md` with this structure:
 When the file already exists, check each field:
 1. Do the recorded source paths still exist as directories on disk?
 2. Do the test commands still appear in their source files?
-3. Does `git log --oneline -5` show any commits touching project config files since `## Last verified`?
+3. Inspect dated history and changed paths for the discovered config files, for example `git log --since=<last-verified-date> --name-status -- <config-paths>`. Also check working-tree changes. Do not infer changed paths from commit subjects alone.
 
 Update only changed fields. Always refresh `## Last verified`.
 If a previously recorded path no longer exists, note it as `REMOVED` rather than deleting the line — this itself may be a discoverability finding.

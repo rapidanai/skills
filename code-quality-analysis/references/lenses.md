@@ -1,8 +1,8 @@
 # Analysis Lenses
 
-Before launching subagents, read `docs/code-quality/stack-discovery.md` and extract the backend root, frontend root, test roots, asset directories, migration directories, API client path, and test commands. If the file is missing, abort and return to step 0. Skip any agent whose primary path is recorded as "not present" — with one exception: a static/SPA repo with no backend root still has server-side code in build/ops tooling (`scripts/`, `bin/`, `tools/`) and any auxiliary servers (webhook handlers, small Node/Python services). Run Agent 1 against those instead of skipping it; record the tooling dirs as the backend-root substitute in stack discovery.
+Before launching subagents, read `docs/code-quality/stack-discovery.md` and extract the backend root, frontend root, test roots, asset directories, migration directories, API client path, and test commands. For a read-only audit, use the discovery retained in working context. If neither is available, return to step 0. Skip any agent whose primary path is recorded as "not present" — with one exception: a static/SPA repo with no backend root still has server-side code in build/ops tooling (`scripts/`, `bin/`, `tools/`) and any auxiliary servers (webhook handlers, small Node/Python services). Run Agent 1 against those instead of skipping it; record the tooling dirs as the backend-root substitute in stack discovery.
 
-Launch up to 4 delegate_task subagents in parallel, one per lens below. Pass each agent its relevant paths, the project root, and the instruction to return only `file:line` observations (no prescriptions). Subagents are leaf agents — they cannot delegate further.
+Run the selected lenses below, using up to 4 independent read-only subagents when available and permitted, or sequential passes in the current session. Pass each agent its relevant paths, the project root, and the instruction to return only `file:line` observations (no prescriptions). Ask subagents not to delegate further; use the host’s available tool schema.
 
 ---
 
@@ -78,7 +78,7 @@ Do not label anything "canonical" unless the code has clearly converged on it.
 
 **Context to pass**: all source roots, test roots, asset directories, migration directories, and API client path from stack discovery.
 
-**Model hint**: This is the lowest-reasoning lens and is a good candidate for a local Ollama model to save API tokens. See the main SKILL.md Step 2 for setup details and caveats.
+**Model hint**: Use the configured model. Local-model routing is optional; every finding still requires source verification.
 
 Goal: find anything no longer actively used by the running application. Prioritize evidence over suspicion — only report what you can cite.
 
@@ -98,7 +98,7 @@ Before flagging anything orphaned, read the project's own docs for files declare
 ### Orphaned files
 - Source files not imported or required by any other file and not an entry point.
 - Config files referencing paths, commands, or services that no longer exist.
-- Migration files for tables or entities that no longer exist in the current schema.
+- Migration files that appear obsolete: verify migration history and fresh-install requirements before flagging them; removed tables alone are not evidence of an orphan.
 
 ### Orphaned tests
 - Test files whose subject module has been deleted or renamed (file no longer at the imported path).

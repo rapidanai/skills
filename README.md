@@ -1,35 +1,91 @@
 # Rapidan AI Skills
 
-The open-source home for reusable agent skills maintained by Rapidan AI.
+Reusable agent skills for **Codex, Claude Code, and Hermes**.
 
 ## Available skills
 
 | Skill | Purpose |
 | --- | --- |
-| [code-quality-analysis](code-quality-analysis/SKILL.md) | Evidence-based code review covering backend and frontend SOLID principles, agentic discoverability, and orphaned artifacts. |
+| [code-quality-analysis](code-quality-analysis/SKILL.md) | Evidence-based review of backend/frontend SOLID principles, agentic discoverability, and orphaned artifacts. |
 
-## Installation
+## Quick install
 
-Clone this repository:
+Requires Git and Python 3. Clone once:
 
 ```sh
 git clone https://github.com/rapidanai/skills.git
+cd skills
 ```
 
-Copy the entire `code-quality-analysis/` directory, including `references/`, into your agent's skills directory. For a Hermes profile, place it under `~/.hermes/profiles/<profile>/skills/software-development/`.
+Install for your user account (available across local projects):
 
-The current skill targets Hermes and uses its `clarify` and `delegate_task` tools. Other agent runtimes need equivalent clarification and delegation capabilities. The optional implementation-plan workflow uses the separate `plan` skill; local Ollama routing uses the separate `local-model-delegation` skill. Neither is bundled here. DESLOP integration is optional.
+```sh
+# Codex
+python3 install.py --agent codex
 
-## Usage
+# Claude Code
+python3 install.py --agent claude
+```
 
-Ask your agent to “analyze the codebase” or perform a “code quality review.” The skill discovers the project stack, clarifies scope, analyzes up to four lenses, verifies cited findings, and offers an implementation plan. Implementation requires user approval within that workflow.
+Run either command, or both if you use both assistants. On Windows, use `py -3` instead of `python3` if needed. Start a new assistant session after installing.
 
-## Maintenance
+To install for one existing project instead:
 
-This repository is the canonical source for future updates. Installed copies should be refreshed from here.
+```sh
+python3 install.py --agent codex --project /path/to/project
+python3 install.py --agent claude --project /path/to/project
+```
 
-The initial import preserves the November 7, 2026 update from the maintained Hermes skill, including all five reference documents. Its existing metadata version is `1.0.0`.
+The installer copies the entire skill, including references and Codex UI metadata. It does not change assistant settings, install dependencies, or overwrite existing skills. Project installations can be committed with your project for teammates.
+
+### Manual installation
+
+Copy the entire `code-quality-analysis/` directory into the appropriate location:
+
+| Assistant | Personal skills directory | Project skills directory |
+| --- | --- | --- |
+| Codex | `~/.agents/skills/` | `.agents/skills/` |
+| Claude Code | `~/.claude/skills/` | `.claude/skills/` |
+| Hermes | Your active profile’s `skills/software-development/` | Follow your Hermes profile configuration |
+
+For example, a personal Codex installation ends at `~/.agents/skills/code-quality-analysis/SKILL.md`. For a named Hermes profile, the usual destination is `~/.hermes/profiles/<profile>/skills/software-development/code-quality-analysis/`.
+
+These are local installations. Hosted/cloud sessions need the skill available in their own supported environment. See the official [Codex skill documentation](https://learn.chatgpt.com/docs/build-skills) and [Claude Code skill documentation](https://code.claude.com/docs/en/skills) for discovery rules and hosted-session limitations.
+
+## Use it
+
+In Codex:
+
+```text
+$code-quality-analysis Review this repository. Report only, all four lenses, moderate refactor appetite.
+```
+
+In Claude Code:
+
+```text
+/code-quality-analysis Review this repository. Report only, all four lenses, moderate refactor appetite.
+```
+
+In Hermes, ask to use `code-quality-analysis` with the same scope. Natural requests such as “analyze the codebase” or “find orphaned code” can also activate the skill.
+
+The skill discovers the stack, establishes scope, analyzes the selected lenses, verifies source citations, and provides a ranked report. It can also produce a self-contained implementation plan. Subagents are optional: when unavailable, the same checks run sequentially. No additional skills, MCP servers, or local models are required. A read-only request keeps discovery and plans in the conversation.
+
+## Update or uninstall
+
+Run `git pull --ff-only` in this checkout to get updates. Before reinstalling, back up any local edits and remove **only the installed `code-quality-analysis` directory** from the location above, then rerun the installer. Removing that directory also uninstalls the skill. Restart your assistant session afterward. Avoid duplicate personal and project copies unless you intend to manage both.
+
+## Development
+
+This repository is the canonical source; update installed copies from here.
+
+```sh
+python3 -m unittest discover -s tests -v
+```
+
+Tests install into temporary directories and check personal/project destinations, complete package copying, and protection of existing installations. They do not run live Codex, Claude Code, or Hermes sessions.
+
+Version `1.1.0` adds runtime-neutral instructions, Codex metadata, and Codex/Claude Code installation. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
 
 ## License
 
-[MIT](LICENSE), matching the imported skill's license declaration.
+[MIT](LICENSE), copyright Jon Deavers.

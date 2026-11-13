@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Quality Analysis"
+  short_description: "Review SOLID, discoverability, and orphaned code"
+  default_prompt: "Use $code-quality-analysis to review this repository."
