@@ -3,7 +3,7 @@ name: code-quality-analysis
 description: Use when asked for a codebase quality review, SOLID analysis, design inconsistencies, agentic discoverability, dead code, or orphaned artifacts.
 license: MIT
 metadata:
-  version: "1.2.0"
+  version: "1.3.0"
   author: Jon Deavers
 ---
 
@@ -39,13 +39,17 @@ Give each delegate its lens brief, discovered paths, absolute repository root, s
 
 Use [report.md](references/report.md), rendered according to the selected mode. Read every finding's cited source yourself, verify line numbers and surrounding context, and discard unsupported observations. Merge cross-lens duplicates. Require a concrete consequence, such as incorrect behavior, repeated change sites, or demonstrated testing/navigation difficulty. SOLID heuristics are investigation cues, not reasons to impose abstractions. Distinguish framework requirements from avoidable design problems. For applicable ecosystems, consult [ecosystem notes](references/ecosystem-notes.md).
 
-Confirm potential orphans with a second search using alternate names and dynamic-reference patterns. Lack of an internal caller does not prove a public API is unused; historical migrations can remain necessary. Report unresolved usage as uncertainty, not confirmed dead code. Explicitly distinguish lenses with no findings from skipped or incomplete lenses. Do not invent findings. Use [tokens.md](references/tokens.md) to compare a representative task before and after a supported hypothetical improvement in every mode. This brief comparison is not an implementation plan; label the after-state hypothetical and keep implementation steps in requested plans. Report inspected/skipped/inaccessible scope and checks actually performed. This review is not a comprehensive security, correctness, performance, or accessibility audit.
+Confirm potential orphans with a second search using alternate names and dynamic-reference patterns. Lack of an internal caller does not prove a public API is unused; historical migrations can remain necessary. Report unresolved usage as uncertainty, not confirmed dead code. Explicitly distinguish lenses with no findings from skipped or incomplete lenses. Do not invent findings. Report inspected/skipped/inaccessible scope and checks actually performed. This review is not a comprehensive security, correctness, performance, or accessibility audit.
 
 ### 4. Plan when requested
 
 If a plan was already requested, produce it using [plan.md](references/plan.md) in the selected mode. Otherwise offer one for all findings or a chosen subset. Follow an existing project plan convention; absent one, use `docs/code-quality/plans/<descriptive-name>.md`. For read-only work, return the plan in chat. No separate planning skill is needed.
 
-### 5. Implement only when authorized
+### 5. Offer optional token estimate
+
+After the completed session summary, offer an optional estimate of how the proposed code improvements could reduce tokens on future development tasks. Include “Explain this.” Do not estimate in an ordinary report or plan, and wait for explicit opt-in. An explanation keeps the choice pending and does not authorize implementation. After opt-in, read [tokens.md](references/tokens.md) and give a lightweight comparison for the same task on current and proposed code. If no supported improvement exists, say so.
+
+### 6. Implement only when authorized
 
 Implement only the approved scope in dependency order. Derive new-file conventions from the checkout. Run the relevant lint and tests identified in discovery, distinguish existing failures from regressions, and report checks that could not run. Refresh discovery when the project shape changes. Commit, push, deploy, or run database upgrades only when those actions are authorized; this skill grants no extra permission.
 

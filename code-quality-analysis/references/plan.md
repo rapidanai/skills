@@ -11,6 +11,6 @@ Use the project’s existing plan convention, or `docs/code-quality/plans/<descr
 
 9. **Smallest useful change and alternatives** — prefer a local correction when sufficient; explain any proposed abstraction using actual change pressure. Include keeping the current structure when sensible.
 10. **Behavior, risk, and rollback** — identify public behavior that must remain stable (or the intentional bug correction), regression checks, affected consumers, and how to revert safely. Do not describe unrun tests as passing.
-11. **Before/after token impact** — for each significant change, apply [tokens.md](tokens.md) to the same representative future task, separate recurring savings from upfront implementation/verification effort, and state uncertainty. Include an overall assessment without adding overlapping savings.
+11. **Optional estimate offer** — after the completed session summary, offer to estimate how proposed code improvements could reduce tokens on future development tasks. Include “Explain this.” Wait for explicit opt-in before applying [tokens.md](tokens.md).
 
 Render in the chosen [mode](modes.md): Developer keeps technical detail; Plain language explains what would change, why, risk, and how success will be checked with an evidence trail; Learning keeps Developer detail plus a short contextual explanation per distinct change. Proposed changes remain proposals until authorized and implemented. Any clarification or approval question includes “Explain this”; Learning provides the context automatically.

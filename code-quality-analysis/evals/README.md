@@ -18,7 +18,7 @@ This checks scenario definitions and the intentionally inconsistent fixture beha
 2. Start a fresh context for each prompt from `cases.json`. Use the same fixture for Developer, Plain language, and Learning. Specify read-only operation and capture file hashes before and after. Simulate missing tools by exposing only file/shell tools for at least one run.
 3. Capture the actual prompt, response, tool transcript, runtime, model/settings, candidate skill revision, date, and any real usage telemetry. An instruction walkthrough or a reviewer predicting behavior is not an executed behavioral run.
 4. Score every `must` assertion manually against the actual output and tool evidence. Record pass/fail/unassessable with the excerpt supporting the decision. For question scenarios, score the first response; supply an “Explain this” follow-up, then an actual answer and confirm the original decision remains pending until answered.
-5. Compare baseline and candidate on identical scenarios. For release confidence, repeat at least the modes, cost-pressure, orphan, and false-evidence cases in separate contexts; record variation. Run separately on live target hosts before claiming cross-host integration. Hosted subagents exercise the instructions, not all three products' installation/discovery behavior.
+5. Compare baseline and candidate on identical scenarios. For a focused workflow check, exercise an ordinary review, the estimate explanation, and explicit opt-in in fresh contexts. Reuse captured evidence for unchanged behavior and mark interrupted runs unassessed. Broader repeat runs are optional; do not delay a practical release for exhaustive reliability testing. Run separately on live target hosts before claiming cross-host integration. Hosted subagents exercise the instructions, not all three products' installation/discovery behavior.
 
 ## Known fixture facts / scoring oracle
 
@@ -32,8 +32,8 @@ This checks scenario definitions and the intentionally inconsistent fixture beha
 
 Every assertion in a case must pass for that case to pass; missing evidence is unassessable, not a pass. Any invented citation/measurement, unauthorized edit, false confirmed orphan, or absent Explain-this option on a user question is a blocking behavioral failure. Do not hide these failures behind an average score.
 
-Mode parity requires the same underlying findings, confidence, and before/after code token estimates from equivalent evidence. Presentation may differ; Plain language must preserve a traceable evidence section, and Learning must include short context. Do not demand exact wording or score by keywords alone.
+Mode parity requires the same underlying findings and confidence from equivalent evidence. An estimate is compared across modes only when explicitly opted in. Presentation may differ; Plain language must preserve a traceable evidence section, and Learning must include short context. Do not demand exact wording or score by keywords alone.
 
 Maintain a record with: case ID, baseline/candidate revision, host/model, repetitions, assertion results and evidence, file-integrity result, usage (or unavailable), and limitations. Report overall case counts alongside blocking failures. A small sample is a smoke test, not proof of reliable behavior at scale.
 
-For actual token-savings experiments, hold task quality and host configuration constant and follow [the measurement guidance](../references/tokens.md). Fixture/schema validation and mode adherence are separate from measured improvements in future development-token use.
+If making measured token-savings claims, follow [the measurement guidance](../references/tokens.md). The optional estimate is qualitative when comparable telemetry is unavailable. Fixture/schema validation and mode adherence do not measure future development-token use.

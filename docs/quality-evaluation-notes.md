@@ -1,21 +1,21 @@
 # Quality evaluation status — 2026-11-13
 
-Candidate: skill version 1.2.0. Baseline: version 1.1.1 before the audience-mode changes.
+Published baseline: version 1.2.0 at `f814d2b`. This revision is version 1.3.0. The workflow now completes the session summary before offering an optional future-development token estimate with “Explain this.” The estimate requires explicit opt-in. Asking for an explanation leaves that decision pending and never authorizes implementation.
 
-## What was exercised
+## Captured behavior from the prior candidate
 
-- The existing installer tests exercise actual copies into temporary Codex, Claude Code, and Hermes destinations, including copying the whole skill package. Multi-skill selection and existing-file protection are covered.
-- The embedded validator checks all 14 scenario definitions and known fixture behavior: preferred-customer preview 90, checkout 95, ordinary-customer totals equal. This is deterministic asset validation, not assistant compliance.
-- One actual baseline subagent review read the five fixture files, searched references, and executed the documented calculation with bytecode writing disabled. The prompt requested Plain language, read-only, report only, all applicable lenses, modest appetite, and token estimates. The exact model identifier and token telemetry were unavailable; the host was the current Codex agent environment. This was one run, not a repeated benchmark.
+The captures under `/tmp/code-quality-behavior-20261113/` are instruction tests in fresh Codex subagents, not live Codex, Claude Code, or Hermes installation/discovery tests. Ten case directories have response files; other started directories have no response and are unassessed. Every one of the 21 captured fixture copies matches its `before.json` SHA-256 values. This establishes file integrity for the read-only fixtures, not that every response followed the skill.
 
-The baseline found the differing discount rules and verified their lines, did not falsely flag the documented dynamic plugin or the simple service import, and reported no file changes. It still used the rigid technical report headings. Its token paragraph rated review overhead and future savings without a structured before/after task comparison. The baseline prompt predated the user's clarification that comparisons must concern the code rather than presentation modes, so it is not a controlled before/after comparison with the final candidate prompts.
+The Developer, Plain language, and Learning reviews each identified the preferred-customer mismatch (preview 90 versus checkout 95 on 100), with high finding confidence. The completed orphan review did not misclassify the documented dynamically loaded receipt plugin. The narrow `ui.py` review avoided proposing abstractions for its direct import. The single-file review did not claim repository-wide coverage. Completed explanation interactions kept choices pending until the user supplied substantive answers. One mode explanation discussed Learning's response-token cost; future explanations should address presentation choices without ranking modes by token use.
 
-## Candidate behavioral testing remains incomplete
+The first unsupported-savings response declined “40%” and “$100/month,” but omitted the former rubric's requested measurement approach. That case failed that assertion. It is not a pass. The `code-not-mode-savings` attempt failed with a usage-limit error. Missing and interrupted responses are unassessed. No comparable token telemetry was captured, so no measured token savings, numeric percentage, or dollar outcome is established.
 
-Three independent candidate runs were requested for Developer, Plain language, and Learning against the same fixture. All stopped with an account usage-limit error before returning candidate responses. They are **not run / unassessable**, not passes. No candidate behavioral pass rate, measured token savings, or cross-host integration claim is supported.
+## Revised opt-in workflow validation
 
-Static review of the revised instructions and passing asset/installer checks do not replace those runs. In particular, mode parity, explanation availability on later questions, false-evidence rejection, and estimate honesty still need actual candidate responses scored against the bundled assertions.
+The revised assets contain three focused behavioral scenarios: an ordinary review that must not estimate before opt-in, an “Explain this” response that keeps the choice pending, and an explicitly opted-in estimate that compares the same future task on current and proposed code. The fixture validator checks scenario structure and known behavior, not assistant decisions. These revised scenarios have not been run with a fresh agent as of this record; their outcomes are unassessed. The earlier completed runs support unchanged evidence, mode, and false-positive safeguards, but cannot establish adherence to the revised opt-in sequence.
 
-## Rerun before making stronger claims
+A future smoke run should capture actual prompts, responses, tool evidence, fixture hashes, host/model/settings, and any usage telemetry for those three scenarios. Qualitative source-based estimates may be useful after opt-in. Measured savings require comparable task telemetry. Cross-host installation and discovery behavior remains untested.
 
-Follow the embedded evaluation guide using fresh contexts. Retain each prompt, actual response/tool transcript, candidate revision, host/model/settings, assertions and supporting excerpts, before/after fixture hashes, and available token telemetry. Repeat the core scenarios and run live target-host sessions before claiming reliable integration on Codex, Claude Code, and Hermes. Treat blocked or incomplete cases as unassessable; any critical behavioral failure blocks a behavioral-validation claim.
+## Package checks for version 1.3.0
+
+On 2026-11-13, `python3 -m unittest discover -s tests -v` passed 16 tests; `python3 code-quality-analysis/evals/validate.py` passed 16 scenario definitions and fixture oracles; the skill metadata validator passed; 27 relative Markdown links were checked with none broken; and `git diff --check` passed. These checks do not establish revised assistant behavior.

@@ -1,6 +1,6 @@
-# Before-and-after token savings
+# Optional future-task token estimate
 
-Estimate the impact of the reviewed code and proposed improvements on future AI-assisted development tasks. This is not a comparison of presentation modes. Developer, Plain language, and Learning must report the same code-impact estimates from the same evidence.
+Use only after the completed session summary and explicit opt-in to estimate the impact of proposed improvements on future AI-assisted development tasks. “Explain this” keeps the decision pending; it is not opt-in. This is not a comparison of presentation modes. Developer, Plain language, and Learning must report the same code-impact estimates from the same evidence.
 
 ## Frame the comparison
 
@@ -8,9 +8,9 @@ Name a representative task, such as “add a pricing rule,” “find the correc
 
 Count task work beyond code length: source/context reading, searching, reasoning, tool output, retries, tests, and all delegated agents where usage is exposed. Smaller code is not automatically cheaper to work on. More abstraction may add navigation and context costs. Keep AI development tokens distinct from the application's own LLM calls, application performance, hosting costs, and developer time. Assess application LLM-token savings only when that usage is explicitly in scope and supported by evidence; report it separately.
 
-## Required comparison in every mode
+## Lightweight comparison after opt-in
 
-For each significant finding/proposed change, include:
+For a supported proposed improvement, cover these points briefly:
 
 | Field | Content |
 | --- | --- |
@@ -22,7 +22,7 @@ For each significant finding/proposed change, include:
 | Confidence and basis | Measured / source-based estimate / hypothesis; assumptions and limitations |
 | Upfront change effort | Low / Medium / High / Unknown; implementation and verification cost is separate from recurring savings |
 
-Plain language can express these fields in a short paragraph or compact table. Learning adds context, but must not change the estimate. Summarize overall impact conservatively; do not add overlapping per-finding savings. A report-only response may describe a brief hypothetical improved state solely to make the comparison intelligible; do not turn it into implementation steps or claim authorization to change code.
+Plain language can express these fields in a short paragraph or compact table. Learning adds context, but must not change the estimate. Avoid adding overlapping savings. A report-only estimate may describe a hypothetical improved state solely to make the comparison intelligible; it does not authorize implementation. Do not run repeated agent benchmarks for this optional estimate.
 
 ## Rating rules
 
