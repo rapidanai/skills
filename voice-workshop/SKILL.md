@@ -3,7 +3,7 @@ name: voice-workshop
 description: Use when capturing or applying the user's writing voice.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   author: Jon Deavers
 ---
 

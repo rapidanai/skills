@@ -66,7 +66,7 @@ python3 install.py --agent codex --all
 
 ### Manual installation
 
-Copy the entire `code-quality-analysis/` directory into the appropriate location:
+Copy the entire skill directory — for example `voice-workshop/` — into the appropriate location:
 
 | Assistant | Personal skills directory | Project skills directory |
 | --- | --- | --- |
@@ -128,7 +128,7 @@ In Claude Code and Hermes:
 /voice-workshop docs/home.md
 ```
 
-The text after the command is the page or doc to review; with none, the skill asks for it. It presents one section at a time, edits the copy toward your voice, and records each decision — the rule, the before/after, and the reason — in a profile at `~/.voice-workshop/profile.md`. The profile grows across sessions, so future writing needs less editing. Ask for new copy instead of a review and the same profile is applied to the draft. See [the skill](voice-workshop/SKILL.md).
+The text after the command is the page or doc to review; with none, the skill asks for it. It presents one section at a time, edits the copy toward your voice, and records each decision — the rule, the before/after, and the reason — in a profile at `~/.voice-workshop/profile.md`. The profile grows across sessions, so future writing needs less editing. Ask for new copy instead of a review and the same profile is applied to the draft. The profile is local user state: it lives outside the installed skill, it is never published to this repository, and updating or reinstalling the skill leaves it untouched — this repository ships only the blank template. See [the skill](voice-workshop/SKILL.md).
 
 ## Quality and embedded evaluations
 
@@ -145,7 +145,7 @@ This validates the evaluation definitions and fixture behavior; it does not run 
 
 ## Update or uninstall
 
-Run `git pull --ff-only` in this checkout to get updates. Identical reinstallations succeed without changes. To replace a differing installation, first back up any local edits and remove **only the installed `code-quality-analysis` directory** from the location above, then rerun the installer. Removing that directory also uninstalls the skill. Restart your assistant session afterward. Avoid duplicate personal and project copies unless you intend to manage both.
+Run `git pull --ff-only` in this checkout to get updates. Identical reinstallations succeed without changes. To replace a differing installation, first back up any local edits and remove **only that skill's installed directory** from the location above, then rerun the installer. Removing that directory also uninstalls the skill. One skill's directory is independent of the other's. Restart your assistant session afterward. Avoid duplicate personal and project copies unless you intend to manage both.
 
 ## Development
 
@@ -155,9 +155,9 @@ This repository is the canonical source; update installed copies from here.
 python3 -m unittest discover -s tests -v
 ```
 
-Tests install into temporary directories and check personal/project destinations, complete package copying, and protection of existing installations. They do not run live Codex, Claude Code, or Hermes sessions.
+Tests install into temporary directories and check personal/project destinations, complete package copying, and protection of existing installations. `tests/test_no_local_content.py` additionally fails the build when a published skill contains a machine-local path, an internal hostname, a secret-shaped string, or a committed voice profile. They do not run live Codex, Claude Code, or Hermes sessions.
 
-Version `1.4.0` adds deterministic before/after code-quality measurement for implemented changes. Version `1.3.0` introduced an optional token estimate, which `1.4.0` removes. Version `1.2.0` added audience modes, built-in explanations, stronger evidence rules, and embedded evaluations. Version `1.1.1` added URL-driven agent installation guidance, a Hermes profile-aware installer, and verified repeat installations. Version `1.1.0` introduced runtime-neutral instructions and Codex/Claude Code support. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
+Version `1.5.0` adds `tests/test_no_local_content.py`, a build-time guard that fails on machine-local paths, internal hostnames, secret-shaped strings, or a committed voice profile, and documents `voice-workshop`'s profile as local user state that is never published. Version `1.4.0` adds deterministic before/after code-quality measurement for implemented changes. Version `1.3.0` introduced an optional token estimate, which `1.4.0` removes. Version `1.2.0` added audience modes, built-in explanations, stronger evidence rules, and embedded evaluations. Version `1.1.1` added URL-driven agent installation guidance, a Hermes profile-aware installer, and verified repeat installations. Version `1.1.0` introduced runtime-neutral instructions and Codex/Claude Code support. The original `1.0.0` import came from the maintained November 7, 2026 Hermes package.
 
 ## License
 
