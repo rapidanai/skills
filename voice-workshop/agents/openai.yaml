@@ -1,0 +1,4 @@
+interface:
+  display_name: "Voice Workshop"
+  short_description: "Capture and evolve a writing voice while editing copy"
+  default_prompt: "Use $voice-workshop to review this page and record my writing voice."

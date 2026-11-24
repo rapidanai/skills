@@ -10,7 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class InstallTests(unittest.TestCase):
+    # The repository ships more than one skill, so a bare install now needs an
+    # explicit selection; name the original skill unless a test chooses its own.
     def run_install(self, *args, env=None):
+        if not any(arg in ('--skills', '--all', '--list') for arg in args):
+            args = (*args, '--skills', 'code-quality-analysis')
         return subprocess.run([sys.executable, str(ROOT / 'install.py'), *args],
                               text=True, capture_output=True, env=env)
 
@@ -153,6 +157,20 @@ class SelectionTests(unittest.TestCase):
                 self.assertEqual(result.returncode, 0, result.stderr)
                 dest = self.project / '.agents/skills'
                 self.assertEqual(sorted(p.name for p in dest.iterdir()), ['first-skill', 'second-skill'])
+
+    def test_sole_skill_installs_without_selection(self):
+        sole = self.root / 'sole'
+        sole.mkdir()
+        shutil.copy2(ROOT / 'install.py', sole / 'install.py')
+        package = sole / 'only-skill'
+        package.mkdir()
+        (package / 'SKILL.md').write_text('---\nname: only-skill\ndescription: Test fixture\n---\n')
+        result = subprocess.run(
+            [sys.executable, str(sole / 'install.py'), '--agent', 'codex', '--project', str(self.project)],
+            text=True, capture_output=True,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual([p.name for p in (self.project / '.agents/skills').iterdir()], ['only-skill'])
 
     def test_unspecified_selection_requires_choice_for_multiple_skills(self):
         result = self.run_install('--agent', 'codex', '--project', str(self.project))

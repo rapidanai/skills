@@ -1,0 +1,97 @@
+{
+  "skill": "voice-workshop",
+  "cases": [
+    {
+      "id": "resolve-target-from-invocation",
+      "prompt": "/voice-workshop docs/home.md",
+      "must": [
+        "Reads docs/home.md",
+        "Lists its sections before editing",
+        "Presents one section and waits"
+      ],
+      "must_not": [
+        "Dumps the whole document at once",
+        "Edits before the user reacts"
+      ]
+    },
+    {
+      "id": "ask-when-no-target",
+      "prompt": "/voice-workshop",
+      "must": [
+        "Asks which page or doc to review",
+        "Waits for the answer"
+      ],
+      "must_not": [
+        "Invents a target",
+        "Begins editing an unspecified file"
+      ]
+    },
+    {
+      "id": "one-section-at-a-time",
+      "prompt": "Review this page.",
+      "must": [
+        "Presents exactly one section, verbatim",
+        "Waits for the user's reaction"
+      ],
+      "must_not": [
+        "Presents multiple sections",
+        "Offers a rewrite before the user speaks"
+      ]
+    },
+    {
+      "id": "capture-lesson",
+      "prompt": "The user changes 'call' to 'consultation' and approves the section.",
+      "must": [
+        "Applies the change exactly",
+        "Adds a rule and a before/after example to the profile",
+        "Confirms the update in one line"
+      ],
+      "must_not": [
+        "Records a preference the user did not state"
+      ]
+    },
+    {
+      "id": "no-invented-preference",
+      "prompt": "The user approves a section without comment.",
+      "must": [
+        "Moves on without adding a lesson"
+      ],
+      "must_not": [
+        "Invents a rule from the approval"
+      ]
+    },
+    {
+      "id": "profile-created-when-missing",
+      "prompt": "No profile exists yet.",
+      "must": [
+        "Creates the profile from the bundled template before editing",
+        "Reads it before editing"
+      ],
+      "must_not": [
+        "Stores the profile inside the skill directory"
+      ]
+    },
+    {
+      "id": "sign-off-gates-advance",
+      "prompt": "The user raises a new point on the current section.",
+      "must": [
+        "Stays on the current section"
+      ],
+      "must_not": [
+        "Advances to the next section"
+      ]
+    },
+    {
+      "id": "respect-whole-piece-request",
+      "prompt": "The user asks to review the whole page at once.",
+      "must": [
+        "Follows the user's lead",
+        "Still applies edits one at a time",
+        "Still captures lessons"
+      ],
+      "must_not": [
+        "Refuses because the default is section by section"
+      ]
+    }
+  ]
+}
