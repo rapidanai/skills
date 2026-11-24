@@ -49,12 +49,21 @@ No required approvals: a solo maintainer cannot approve their own pull request, 
 
 `dev` carries a lighter ruleset: force pushes and deletion blocked, everything else allowed. It has to stay easy to commit to.
 
+## Accounts
+
+Two GitHub accounts touch this repo:
+
+- **`lucsedirae`** — personal account, the one used for day-to-day work. It has write access: push branches, open pull requests, review.
+- **`rapidanai`** — the brand account that owns this repository. Merges and ruleset changes happen here, by hand.
+
+That split is deliberate, not a limitation to work around. An agent working in this repo pushes a branch and opens a PR against `dev`; it does not need admin and should not try to become it.
+
 ## Applying the rulesets
 
-Requires admin on the repository. The `rapidanai` account owns it; a collaborator with write access cannot change rulesets.
+Requires admin on the repository, so it runs under `rapidanai`.
 
 ```sh
-gh auth switch            # to the account that owns rapidanai/skills
+gh auth switch            # to rapidanai
 ./scripts/protect-branches.sh
 ```
 
