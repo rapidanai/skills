@@ -60,3 +60,16 @@ A user may keep more than one voice (for example, personal and work). Store each
 ## Where the profile lives
 
 Default: `~/.voice-workshop/profile.md`. If the user wants the profile kept with a project, use a path inside that project and record it so the next session finds it. Never store the profile inside this skill's own directory — a reinstall would fail against local edits.
+
+Notes that describe one machine's arrangement are not part of the skill's behaviour. Keep them out of the published copy; the only arrangement the skill promises is the default path above.
+
+### Verifying a moved or symlinked profile
+
+When the user asks that the profile survive a new session, a local file is not enough — prove it. Run these checks and report the results rather than asserting success:
+
+1. **The documented path resolves to the canonical file.** Resolve the link and compare checksums of the documented path and its target. One file, not two copies that will drift.
+2. **Writes through the documented path land in the canonical file.** Timestamp the target, append through the documented path, timestamp it again — the mtime must move.
+3. **The sync tool picked it up.** Ask the tool for its own status. A file sitting in a synced folder is not a synced file until the client reports it.
+4. **The profile still validates.** Run `scripts/voice_profile.py validate`. It follows symlinks, so a pass confirms the documented path is readable with every required section present.
+
+Also record the resume point in Open questions — which sections were signed off, which one is next — or a new session restarts the review from the top.
