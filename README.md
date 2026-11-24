@@ -149,7 +149,7 @@ Run `git pull --ff-only` in this checkout to get updates. Identical reinstallati
 
 ## Development
 
-This repository is the canonical source; update installed copies from here.
+This repository is the canonical source; update installed copies from here. Work lands on `dev` and is published by merging `dev` into `main` — `main` is what clones and installers receive. See [branching and publishing](docs/branching.md).
 
 ```sh
 python3 -m unittest discover -s tests -v
