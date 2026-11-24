@@ -19,6 +19,7 @@ The agent should clone the repository, follow [INSTALL.md](INSTALL.md), install 
 | Skill | Purpose |
 | --- | --- |
 | [code-quality-analysis](code-quality-analysis/SKILL.md) | Evidence-based review of backend/frontend SOLID principles, agentic discoverability, and orphaned artifacts. |
+| [voice-workshop](voice-workshop/SKILL.md) | Captures the user's writing voice in a living profile, then applies it when writing new copy. |
 
 ## Quick install
 
@@ -113,14 +114,31 @@ For example:
 Use code-quality-analysis in Plain language mode. Review all applicable lenses, stay read-only, and include a small-change plan with reproducible before/after checks.
 ```
 
+### Voice workshop
+
+In Codex:
+
+```text
+$voice-workshop docs/home.md
+```
+
+In Claude Code and Hermes:
+
+```text
+/voice-workshop docs/home.md
+```
+
+The text after the command is the page or doc to review; with none, the skill asks for it. It presents one section at a time, edits the copy toward your voice, and records each decision — the rule, the before/after, and the reason — in a profile at `~/.voice-workshop/profile.md`. The profile grows across sessions, so future writing needs less editing. Ask for new copy instead of a review and the same profile is applied to the draft. See [the skill](voice-workshop/SKILL.md).
+
 ## Quality and embedded evaluations
 
 The skill requires practical evidence before recommending abstraction, separates unsupported suspicions from findings, and reports incomplete coverage. Its four lenses are not a comprehensive security, performance, accessibility, or correctness audit.
 
-The installable package includes [15 behavioral scenarios and a small fixture](code-quality-analysis/evals/README.md), covering audience modes, Explain this, false positives, evidence verification, read-only work, and deterministic code-quality measurement. They load only when evaluating the skill, not during normal reviews.
+The installable package includes [15 behavioral scenarios and a small fixture](code-quality-analysis/evals/README.md), covering audience modes, Explain this, false positives, evidence verification, read-only work, and deterministic code-quality measurement. [voice-workshop](voice-workshop/evals/README.md) ships [11 behavioral scenarios](voice-workshop/evals/cases.json) covering target resolution, one-section-at-a-time pacing, lesson capture, sign-off gating, applying the profile to new copy, and the always-on choice. They load only when evaluating a skill, not during normal reviews.
 
 ```sh
 python3 code-quality-analysis/evals/validate.py
+python3 voice-workshop/evals/validate.py
 ```
 
 This validates the evaluation definitions and fixture behavior; it does not run an assistant or measure implemented changes. See [evaluation status](docs/quality-evaluation-notes.md) for what has and has not been tested.

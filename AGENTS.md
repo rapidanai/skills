@@ -13,6 +13,6 @@ If the user gives this repository URL and asks to install its skills, read [INST
 - Keep public content free of credentials and private environment configuration.
 - Keep the shared skill runtime-neutral; host-specific tool details belong in `references/runtimes.md`.
 - Run `python3 -m unittest discover -s tests -v`, check relative links, and review the diff before publishing changes.
-- For maintainers working inside Rapidan AI's environment, consult `~/Seafile/rapidanAI/AGENTS.md` and its handbook index for operational context. External contributors do not need that private handbook.
+- For maintainers working inside Rapidan AI's environment, consult the internal handbook index for operational context. External contributors do not need it.
 
 For installation, honor the user’s named skills exactly. Use `install.py --list` to discover packages; ask for a selection when multiple exist and none was specified. Install all only when explicitly requested.
