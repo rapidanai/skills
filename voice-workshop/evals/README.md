@@ -27,6 +27,8 @@ This checks that the scenario definitions are well formed and that the bundled p
 - **Lessons trace to decisions.** A captured lesson must include the user's before/after and reason. A rule with no evidence fails `capture-lesson`.
 - **Profile location.** The profile is created at the documented path (or a user-named path), never inside the skill directory.
 - **Sign-off gates advancement.** A new point raised on the current section keeps the agent on that section.
+- **Apply reads first.** New copy is written only after the profile is read; a draft produced without reading it fails `apply-mode-reads-profile`.
+- **Corrections are captured.** A correction to generated copy becomes a profile lesson, not a one-off edit.
 
 ## Release gates
 

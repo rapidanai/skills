@@ -1,6 +1,6 @@
 ---
 name: voice-workshop
-description: Use when reviewing a page or doc to capture the user's writing voice.
+description: Use when capturing or applying the user's writing voice.
 license: MIT
 metadata:
   version: "1.0.0"
@@ -9,15 +9,22 @@ metadata:
 
 # Voice Workshop
 
-Review a page or document one section at a time with the user, edit the copy toward their voice, and record every decision in a living voice profile. The profile is the durable output: it accumulates the user's preferences so future writing needs less editing.
+Build a living record of the user's writing voice, then use it. **Capture** reviews a page or document one section at a time and records every decision in a profile at `~/.voice-workshop/profile.md`. **Apply** reads that profile and writes new copy in the user's voice. The profile is the durable output: it accumulates the user's preferences so future writing needs less editing.
 
 This skill edits copy and maintains the profile. It does not publish, deploy, or commit anything unless the user asks.
+
+## Two modes
+
+- **Capture** — the user names a page or doc to review. Run the capture workflow below.
+- **Apply** — the user asks for new copy (a page, post, email, ad). Read the profile and write in the user's voice; see [applying the profile](references/applying.md). Do not run the review loop unless asked.
+
+If the invocation is ambiguous, ask which the user wants.
 
 ## Runtime adaptation
 
 This skill supports Codex, Claude Code, and Hermes. Use only the tools available in the session; read [runtime guidance](references/runtimes.md) for your host. Resolve reference links relative to this skill's installed directory and content paths relative to the user's project.
 
-## Workflow
+## Capture workflow
 
 ### 0. Resolve the target and load the profile
 
@@ -50,6 +57,10 @@ Confirm the update in one line, then continue.
 
 When the review ends, summarize: sections edited, lessons captured, and the profile path. Offer to apply the profile to other pages or to use it when writing new content.
 
+## Applying the profile
+
+When the user asks for new copy rather than a review, read `~/.voice-workshop/profile.md` and apply its Rules, Prefer, Avoid, and Patterns to the draft. Capture any correction the user makes as a new lesson, the same way the capture workflow does. Full protocol, and how to wire the preflight into other skills and hosts: [applying the profile](references/applying.md).
+
 ## Pitfalls
 
 - Do not dump the whole page at once. One section, then wait.
@@ -63,3 +74,4 @@ When the review ends, summarize: sections edited, lessons captured, and the prof
 - Every edited section was shown to the user and signed off.
 - Every profile entry traces to a specific user decision.
 - The profile file exists at the documented path with the required sections.
+- New copy was written only after reading the profile, and any correction was captured.

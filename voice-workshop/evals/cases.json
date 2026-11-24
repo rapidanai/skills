@@ -92,6 +92,28 @@
       "must_not": [
         "Refuses because the default is section by section"
       ]
+    },
+    {
+      "id": "apply-mode-reads-profile",
+      "prompt": "Write a landing page hero for my course.",
+      "must": [
+        "Reads the voice profile before writing",
+        "Applies the profile's rules to the draft"
+      ],
+      "must_not": [
+        "Writes the copy before reading the profile",
+        "Invents a voice rule the profile does not state"
+      ]
+    },
+    {
+      "id": "apply-mode-captures-correction",
+      "prompt": "The user rewrites a phrase in the generated copy.",
+      "must": [
+        "Captures the correction as a new profile lesson"
+      ],
+      "must_not": [
+        "Leaves the correction uncaptured"
+      ]
     }
   ]
 }
