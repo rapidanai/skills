@@ -18,15 +18,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TEXT_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".json", ".sh", ".txt"}
 
-# Unambiguous machine-local markers. Generic words like "docker-compose.yml" are fine:
-# they name a file a project might have, not a service this author runs.
+# Structural markers, not brand names: the guard itself ships publicly, so it names
+# nobody's infrastructure. A home-relative path outside the skill's own state directory
+# catches a synced-folder mirror without spelling out which sync client is in use.
 LOCAL_PATTERNS = {
-    "LOCAL-ONLY marker": re.compile(r"LOCAL-ONLY"),
-    "absolute home path": re.compile(r"/home/[a-z]"),
-    "private sync client": re.compile(r"Seafile|ccnet", re.I),
-    "private network": re.compile(r"tailscale|ts\.net|\.ts\.net", re.I),
-    "named client project": re.compile(r"heart[\s-]of[\s-]gold|HoG\b", re.I),
-    "cloud CLI bound to one account": re.compile(r"\bgcloud\b", re.I),
+    "local-only marker left in a published file": re.compile(r"LOCAL-ONLY"),
+    "absolute POSIX home path": re.compile(r"/home/[a-z]|/Users/[a-z]"),
+    "Windows user path": re.compile(r"[A-Za-z]:\\\\?Users\\\\", re.I),
+    "home-relative path outside the skill's own state directory": re.compile(
+        r"~/(?!\.voice-workshop/|\.claude/|\.agents/)[A-Za-z_.]"
+    ),
+    "internal-only hostname": re.compile(r"\.ts\.net\b", re.I),
     "internal domain": re.compile(r"rapidanai\.com", re.I),
 }
 
