@@ -40,7 +40,7 @@
     },
     {
       "id": "capture-lesson",
-      "prompt": "The user changes 'call' to 'consultation' and approves the section.",
+      "prompt": "The user changes 'utilize' to 'use' and approves the section.",
       "must": [
         "Applies the change exactly",
         "Adds a rule and a before/after example to the profile",

@@ -40,7 +40,7 @@ Sessions: <count>
 
 A lesson has three parts: the rule, the concrete before/after, and the reason. Add all three or it is not a lesson.
 
-1. **Rules** — the transferable, imperative form of the decision. "Use 'consultation', not 'call'." One rule per line.
+1. **Rules** — the transferable, imperative form of the decision. "Use 'use', not 'utilize'." One rule per line.
 2. **Prefer / Avoid** — word- and phrase-level vocabulary. These are the fastest to apply.
 3. **Examples** — the evidence. Keep the before/after short; the point is to show the rule in action.
 4. **Open questions** — anything the user hesitated on. Revisit it next session instead of guessing.
