@@ -79,9 +79,10 @@ apply() {
 }
 
 if ! gh api "repos/$REPO" --jq '.permissions.admin' | grep -q true; then
+  current=$(gh api "repos/$REPO" --jq '[.permissions | to_entries[] | select(.value) | .key] | join(",")' 2>/dev/null || echo unknown)
   echo "error: this account does not have admin on $REPO." >&2
-  echo "       repos are administered by the account that owns them; switch with 'gh auth switch'." >&2
-  echo "       current: $(gh api "repos/$REPO" --jq '.permissions | to_entries | map(select(.value)) | map(.key) | join(\",\")' 2>/dev/null || echo unknown)" >&2
+  echo "       rulesets are managed by the account that owns the repository; switch with 'gh auth switch'." >&2
+  echo "       this account has: ${current:-unknown}" >&2
   exit 1
 fi
 
