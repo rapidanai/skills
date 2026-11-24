@@ -134,7 +134,7 @@ The text after the command is the page or doc to review; with none, the skill as
 
 The skill requires practical evidence before recommending abstraction, separates unsupported suspicions from findings, and reports incomplete coverage. Its four lenses are not a comprehensive security, performance, accessibility, or correctness audit.
 
-The installable package includes [15 behavioral scenarios and a small fixture](code-quality-analysis/evals/README.md), covering audience modes, Explain this, false positives, evidence verification, read-only work, and deterministic code-quality measurement. [voice-workshop](voice-workshop/evals/README.md) ships [10 behavioral scenarios](voice-workshop/evals/cases.json) covering target resolution, one-section-at-a-time pacing, lesson capture, sign-off gating, and applying the profile to new copy. They load only when evaluating a skill, not during normal reviews.
+The installable package includes [15 behavioral scenarios and a small fixture](code-quality-analysis/evals/README.md), covering audience modes, Explain this, false positives, evidence verification, read-only work, and deterministic code-quality measurement. [voice-workshop](voice-workshop/evals/README.md) ships [11 behavioral scenarios](voice-workshop/evals/cases.json) covering target resolution, one-section-at-a-time pacing, lesson capture, sign-off gating, applying the profile to new copy, and the always-on choice. They load only when evaluating a skill, not during normal reviews.
 
 ```sh
 python3 code-quality-analysis/evals/validate.py

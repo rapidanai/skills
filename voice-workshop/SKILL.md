@@ -59,7 +59,9 @@ When the review ends, summarize: sections edited, lessons captured, and the prof
 
 ## Applying the profile
 
-When the user asks for new copy rather than a review, read `~/.voice-workshop/profile.md` and apply its Rules, Prefer, Avoid, and Patterns to the draft. Capture any correction the user makes as a new lesson, the same way the capture workflow does. Full protocol, and how to wire the preflight into other skills and hosts: [applying the profile](references/applying.md).
+When the user asks for new copy rather than a review, read `~/.voice-workshop/profile.md` and apply its Rules, Prefer, Avoid, and Patterns to the draft. Capture any correction the user makes as a new lesson, the same way the capture workflow does.
+
+When the user asks the skill to apply their voice, ask whether the preflight should be **always-on** or **skills-only**, explain the trade-off, then wire it for the host and say what was set. Full protocol: [applying the profile](references/applying.md).
 
 ## Pitfalls
 
@@ -68,6 +70,7 @@ When the user asks for new copy rather than a review, read `~/.voice-workshop/pr
 - Do not rewrite copy the user has not asked you to touch.
 - Do not treat your own taste as the user's voice.
 - Do not let the profile accumulate sediment: when a new rule replaces an old one, remove the old wording.
+- Do not silently enable always-on. Ask, explain the trade-off, and name what you changed.
 
 ## Verification
 

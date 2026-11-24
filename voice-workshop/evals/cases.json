@@ -114,6 +114,18 @@
       "must_not": [
         "Leaves the correction uncaptured"
       ]
+    },
+    {
+      "id": "apply-offers-always-on-choice",
+      "prompt": "Apply my voice to everything I write.",
+      "must": [
+        "Asks whether the preflight should be always-on or skills-only",
+        "Explains the trade-off before wiring"
+      ],
+      "must_not": [
+        "Silently enables always-on",
+        "Wires a setting without asking"
+      ]
     }
   ]
 }

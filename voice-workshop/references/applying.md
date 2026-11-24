@@ -23,15 +23,33 @@ When the user corrects copy the agent wrote, that correction is a new lesson:
 
 This is what keeps the profile growing: every draft that gets corrected makes the next draft closer.
 
-## Wiring it in
+## Setting it up: always-on or skills-only
 
-The preflight only fires if the agent is told to run it. Pick the layer that fits the host:
+The preflight only fires if the agent is told to run it, and there are two levels. They trade off differently, so when the user asks the skill to apply their voice, ask which they want and explain the trade-off before wiring anything.
 
-- **Global instructions.** Add one line to the agent's standing context — `AGENTS.md`, `CLAUDE.md`, or the host's memory: "Before writing user-facing copy, read `~/.voice-workshop/profile.md` and apply it." This catches every writing task, including ad-hoc ones.
-- **Content skills.** In each skill that generates copy (blog, landing page, email, ads), add the preflight as its first step. This makes the check part of a skill that is already loading.
-- **Hermes auto-load.** Set `skills.auto_load: [voice-workshop]` so the skill — and this convention — is present in every session.
+**Always-on** — a standing instruction in the agent's context, so the profile is checked for *every* writing request, including one-off copy typed in chat ("draft a LinkedIn post").
 
-Use more than one if you want belt and suspenders; they do not conflict.
+- Pros: catches everything; the voice stays consistent even outside the named content skills.
+- Cons: occupies a little of the agent's context in every session, including sessions with nothing to do with writing.
+
+**Skills-only** — the check lives inside the content skills (blog, landing page, email, ads).
+
+- Pros: no per-session cost; the check runs exactly when a content skill runs.
+- Cons: misses ad-hoc writing that does not go through a named skill.
+
+Neither is wrong, and they combine. Always-on suits someone who writes in chat often; skills-only suits someone whose writing mostly goes through the named skills.
+
+### Wiring the choice
+
+| Host | Always-on | Skills-only |
+| --- | --- | --- |
+| Hermes | `skills.auto_load: [voice-workshop]` in `config.yaml` | nothing to set |
+| Codex | one line in `AGENTS.md` | nothing to set |
+| Claude Code | one line in `CLAUDE.md` | nothing to set |
+
+The always-on line, whatever the host: "Before writing user-facing copy, read `~/.voice-workshop/profile.md` and apply it."
+
+After wiring, state what was set and where, so the user can change it later.
 
 ## What this is not
 
